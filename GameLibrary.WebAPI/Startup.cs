@@ -27,7 +27,7 @@ namespace GameLibrary.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<GameLibraryContext>(options => options.UseInMemoryDatabase(databaseName: "GameLibraryDB"));
+            //services.AddDbContext<GameLibraryContext>(options => options.UseInMemoryDatabase(databaseName: "GameLibraryDB"));
             services.AddSwaggerGen();
         }
 
