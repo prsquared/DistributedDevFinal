@@ -2,6 +2,7 @@
 using GameLibrary.Pocos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GameLibrary.Logic
@@ -13,6 +14,15 @@ namespace GameLibrary.Logic
 
         }
 
+        public override PublisherPoco Get(Guid id)
+        {
+            return _repository.Get(c => c.Id == id, x => x.Developers);
+        }
+
+        public override List<PublisherPoco> GetAll()
+        {
+            return _repository.GetAll(x => x.Developers).ToList();
+        }
         public override void Create(PublisherPoco[] pocos)
         {
             Validate(pocos);
