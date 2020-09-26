@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GameLibrary.Logic
 {
-    class GameLogic : BaseLogic<GamePoco>
+    public class GameLogic : BaseLogic<GamePoco>
     {
         public GameLogic(EFGenericRepository<GamePoco> repository) : base(repository)
         {

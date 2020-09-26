@@ -7,25 +7,20 @@ using System.Text;
 
 namespace GameLibrary.EntityFrameworkDataAccess 
 {
-    public class EFGenericRepository<T>
+    public class EFGenericRepository<T> : IDataRepository<T> where T : class
     {
         private GameLibraryContext _context;
         public EFGenericRepository()
         {
             _context = new GameLibraryContext();
         }
-        public void Add(params T[] items)
+        public void Create(params T[] items)
         {
             foreach (T item in items)
             {
                 _context.Entry(item).State = EntityState.Added;
             }
             _context.SaveChanges();
-        }
-
-        public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
-        {
-            throw new NotImplementedException();
         }
 
         public IList<T> GetAll(params Expression<Func<T, object>>[] navProps)
@@ -38,17 +33,7 @@ namespace GameLibrary.EntityFrameworkDataAccess
             return dbQuery.ToList();
         }
 
-        public IList<T> GetList(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties)
-        {
-            IQueryable<T> dbQuery = _context.Set<T>();
-            foreach (var navProp in navigationProperties)
-            {
-                dbQuery = dbQuery.Include<T, object>(navProp);
-            }
-            return dbQuery.Where(where).ToList();
-        }
-
-        public T GetSingle(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties)
+        public T Get(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties)
         {
             IQueryable<T> dbQuery = _context.Set<T>();
             foreach (Expression<Func<T, object>> navProp in navigationProperties)
